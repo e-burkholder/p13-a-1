@@ -16,17 +16,22 @@ int main() {
 
 }
 
+// pressEnterToContinue: used to keep the console window open long enough to see your program's output
 void pressEnterToContinue() {
-	cout << "\nPress enter to continue... \n";
-	cin.clear();
-	while (cin.get() != '\n') continue;
+	char c;
+	cout << "Press Enter to continue...";
+	cin.ignore(1024, '\n');
+	do { cin.get(c); } while (c != '\n' && c != EOF);
+	return;
 }
+
 
 bool readFromFile(string filename) {
 	ifstream inFile;				 //input filestream for reading in data
 	string word;					 //word info
 	int letterCount = 0;			 //char count
 
+	//ACCOUNTING FOR UNAVAILABLE FILE
 	inFile.open(filename);
 	if (inFile.fail()) {
 		cout << "read error - sorry\n";
@@ -35,6 +40,7 @@ bool readFromFile(string filename) {
 
 	while (inFile >> word) {
 		bool isLetter = false;
+		//FINDING THE TOTAL LETTER COUNT OF THE TEXT
 		for (size_t i = 0; i < word.length(); ++i) {
 			char ch = word[i];
 			if (ch == 'Q' || ch == 'W' || ch == 'E' || ch == 'R' || ch == 'T' || ch == 'Y'
